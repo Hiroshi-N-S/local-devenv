@@ -11,3 +11,12 @@ How to setup Harbor on Synology NAS
     sudo chown -R 10000:10000 harbor
     sudo chmod -R 755 harbor
     ```
+
+2. Copy the updated `harbor.yml` configuration file to the `harbor` directory.
+
+3. Run the Harbor prepare script which will verify that everything was setup correctly prior to performing Harbor installation.
+
+    ``` bash
+    cd /volume1/docker/harbor
+    sudo ./prepare --with-trivy
+    ```

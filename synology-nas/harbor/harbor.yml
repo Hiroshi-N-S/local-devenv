@@ -2,22 +2,22 @@
 
 # The IP address or hostname to access admin UI and registry service.
 # DO NOT use localhost or 127.0.0.1, because Harbor needs to be accessed by external clients.
-hostname: reg.mydomain.com
+hostname: synology-nas.local
 
 # http related config
 http:
   # port for http, default is 80. If https enabled, this port will redirect to https port
   port: 80
 
-# https related config
-https:
-  # https port for harbor, default is 443
-  port: 443
-  # The path of cert and key files for nginx
-  certificate: /your/certificate/path
-  private_key: /your/private/key/path
-  # enable strong ssl ciphers (default: false)
-  # strong_ssl_ciphers: false
+# # https related config
+# https:
+#   # https port for harbor, default is 443
+#   port: 443
+#   # The path of cert and key files for nginx
+#   certificate: /your/certificate/path
+#   private_key: /your/private/key/path
+#   # enable strong ssl ciphers (default: false)
+#   # strong_ssl_ciphers: false
 
 # # Harbor will set ipv4 enabled only by default if this block is not configured
 # # Otherwise, please uncomment this block to configure your own ip_family stacks
@@ -39,7 +39,7 @@ https:
 
 # Uncomment external_url if you want to enable external proxy
 # And when it enabled the hostname will no longer used
-# external_url: https://reg.mydomain.com:8433
+external_url: https://synology-nas.local:8443
 
 # The initial password of Harbor admin
 # It only works in first time to install harbor
@@ -63,7 +63,7 @@ database:
   conn_max_idle_time: 0
 
 # The default data volume
-data_volume: /data
+data_volume: /volume1/docker/harbor/data
 
 # Harbor Storage settings by default is using /data dir on local filesystem
 # Uncomment storage_service setting If you want to using external storage
@@ -162,7 +162,7 @@ log:
     # are all valid.
     rotate_size: 200M
     # The directory on your host that store log
-    location: /var/log/harbor
+    location: /volume1/docker/harbor/log/harbor
 
   # Uncomment following lines to enable external syslog endpoint.
   # external_endpoint:
