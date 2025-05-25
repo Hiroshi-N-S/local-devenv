@@ -15,6 +15,12 @@ This repository contains configurations to set up a development environment.
 - [helm](https://helm.sh/docs/)
 - [velero](https://velero.io/docs/)
 - [kind](https://kind.sigs.k8s.io/)
+- [traefik](https://doc.traefik.io/traefik/) ingress with [MetalLB](https://metallb.io/)
+- [Argo CD](https://argoproj.github.io/cd/)
+  - [Declarative Setup](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/)
+    - [Applications](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#applications)
+    - [Projects](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects)
+    - [Repositories](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#repositories)
 
 ### Synology NAS
 
