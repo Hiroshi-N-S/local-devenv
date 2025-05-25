@@ -20,3 +20,11 @@ How to setup Harbor on Synology NAS
     cd /volume1/docker/harbor
     sudo ./prepare --with-trivy
     ```
+
+4. Rename the auto-generated `docker-compose.yml` file and copy the generated TLS certificate file to the certs directory.
+
+    ``` bash
+    sudo mv docker-compose.yml docker-compose.yml.default
+
+    sudo cp /volume1/docker/certs/* /volume1/docker/harbor/common/config/shared/trust-certificates/
+    ```
