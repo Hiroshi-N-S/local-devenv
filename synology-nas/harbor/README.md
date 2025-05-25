@@ -28,3 +28,5 @@ How to setup Harbor on Synology NAS
 
     sudo cp /volume1/docker/certs/* /volume1/docker/harbor/common/config/shared/trust-certificates/
     ```
+
+5. Install Harbor via [Container Manager](https://kb.synology.com/en-global/DSM/help/ContainerManager/docker_desc).
