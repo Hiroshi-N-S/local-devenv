@@ -21,6 +21,11 @@ variable "nas_domain" {
   type        = string
 }
 
+variable "k8s_domain" {
+  description = "K8S Cluster Domain"
+  type        = string
+}
+
 #
 # Keycloak
 #

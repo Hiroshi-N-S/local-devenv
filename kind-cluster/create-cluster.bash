@@ -31,3 +31,15 @@ kubectl create secret tls \
   --cert $SCRIPT_DIR/../certs/$CERT_FILE_NAME.crt
 
 bash $SCRIPT_DIR/resources/traefik-ingress/apply.bash
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+# Apply Argo CD.
+
+kubectl create namespace argo-cd
+kubectl create secret tls \
+  sso-tls-secret \
+  --namespace argo-cd \
+  --key  $SCRIPT_DIR/../certs/$CERT_FILE_NAME.key \
+  --cert $SCRIPT_DIR/../certs/$CERT_FILE_NAME.crt
+
+bash $SCRIPT_DIR/resources/argo-cd/apply.bash
