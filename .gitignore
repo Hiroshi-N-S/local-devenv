@@ -1,3 +1,15 @@
+# Ignore MacOS .DS_Store files
+.DS_Store
+
+# Ignore certificates
+*.key
+*.crt
+*.csr
+*.ext
+*.srl
+*.cert
+*.pem
+
 # Local .terraform directories
 .terraform/
 
