@@ -1,0 +1,56 @@
+---
+# -- nodeSelector is the simplest recommended form of node selection constraint.
+nodeSelector:
+  kubernetes.io/hostname: kind-cluster-control-plane
+
+# -- Create a default IngressClass for Traefik
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+
+ingressRoute:
+  # -- Create an IngressRoute for the dashboard
+  dashboard:
+    enabled: false
+
+providers:
+  kubernetesCRD:
+    # -- Load Kubernetes IngressRoute provider
+    enabled: true
+
+    # -- Allows IngressRoute to reference resources in namespace other than theirs
+    allowCrossNamespace: true
+
+ports:
+  web:
+    ## -- The port protocol (TCP/UDP)
+    protocol: TCP
+
+    # -- See [upstream documentation](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
+    nodePort: 30080
+
+    redirections:
+      # -- Port Redirections
+      # Added in 2.2, one can make permanent redirects via entrypoints.
+      # Same sets of parameters: to, scheme, permanent and priority.
+      # https://docs.traefik.io/routing/entrypoints/#redirection
+      entryPoint:
+        to: websecure
+        scheme: https
+
+  websecure:
+    ## -- The port protocol (TCP/UDP)
+    protocol: TCP
+
+    # -- See [upstream documentation](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
+    nodePort: 30443
+
+    # -- See [upstream documentation](https://doc.traefik.io/traefik/routing/entrypoints/#tls)
+    tls:
+      enabled: true
+
+# -- TLS Store are created as [TLSStore CRDs](https://doc.traefik.io/traefik/https/tls/#default-certificate). This is useful if you want to set a default certificate. See EXAMPLE.md for details.
+tlsStore:
+  default:
+    defaultCertificate:
+      secretName: traefik-tls-secret
