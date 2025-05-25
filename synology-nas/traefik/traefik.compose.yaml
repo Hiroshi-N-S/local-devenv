@@ -1,0 +1,36 @@
+services:
+
+  traefik:
+    image: traefik:v3.3.6
+    container_name: traefik
+    restart: always
+    ports:
+      - 8080:80
+      - 8443:443
+    command:
+      - --providers.docker.exposedbydefault=false
+      - --entryPoints.web.address=:80
+      - --entryPoints.websecure.address=:443
+      - --entryPoints.websecure.http.tls=true
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
+      - --providers.file.directory=/etc/traefik/dynamic_conf
+      - --providers.file.watch=true
+    environment:
+      TZ: Asia/Tokyo
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /volume1/docker/traefik/config/traefik-tls-config.yaml:/etc/traefik/dynamic_conf/config.yml:ro
+      - /volume1/docker/traefik/certs:/certs:ro
+    deploy:
+      resources:
+        limits:
+          cpus: mid
+          memory: 512m
+    networks:
+      - default
+      - shared
+
+networks:
+  shared:
+    external: true

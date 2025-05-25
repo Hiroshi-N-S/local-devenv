@@ -1,0 +1,6 @@
+tls:
+  certificates:
+    - certFile: /certs/local-devenv.crt
+      keyFile: /certs/local-devenv.key
+      stores:
+        - default
