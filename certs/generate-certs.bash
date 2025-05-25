@@ -2,6 +2,7 @@
 set -eux
 
 NAS_DOMAIN=${NAS_DOMAIN:-'synology-nas'}
+K8S_DOMAIN=${K8S_DOMAIN:-'k8s-cluster'}
 
 CERT_FILE_NAME=${CERT_FILE_NAME:-'local-devenv'}
 
@@ -50,6 +51,7 @@ subjectAltName          = @alt_names
 
 [alt_names]
 DNS.1                   = $NAS_DOMAIN.local
+DNS.2                   = $K8S_DOMAIN.local
 EOF
 fi
 
