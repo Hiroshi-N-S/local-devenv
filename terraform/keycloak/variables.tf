@@ -1,4 +1,27 @@
 #
+# Users
+#
+
+variable "users" {
+  description   = "Users"
+  type          = map(object({
+    email       = string
+    first_name  = string
+    last_name   = string
+    group_name  = string
+  }))
+}
+
+#
+# Domains
+#
+
+variable "nas_domain" {
+  description = "Synology NAS Domain"
+  type        = string
+}
+
+#
 # Keycloak
 #
 

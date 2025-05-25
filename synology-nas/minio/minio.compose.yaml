@@ -1,0 +1,44 @@
+services:
+
+  minio:
+    image: minio/minio:RELEASE.2025-04-08T15-41-24Z
+    labels:
+      traefik.enable: true
+      traefik.docker.network: shared
+      traefik.http.routers.minio.entrypoints: websecure
+      traefik.http.routers.minio.rule: PathPrefix(`/minio`)
+      traefik.http.routers.minio.middlewares: minio-stripprefix
+      traefik.http.middlewares.minio-stripprefix.stripprefix.prefixes: /minio
+      traefik.http.services.minio.loadbalancer.server.port: 9001
+    restart: always
+    command: minio server /data --address ":9000" --console-address ":9001" --certs-dir "/root/.minio/certs/"
+    ports:
+      - 9000:9000
+    volumes:
+      - /volume1/docker/certs:/root/.minio/certs/CAs:ro
+      - /volume1/docker/minio/data:/data
+    environment:
+      TZ: Asia/Tokyo
+      MINIO_BROWSER_REDIRECT_URL: https://synology-nas.local:8443/minio
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: MinIO12345
+      # doc: https://min.io/docs/minio/linux/operations/external-iam/configure-openid-external-identity-management.html
+      MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK_PRIMARY: https://synology-nas.local:8443/keycloak/realms/devops/.well-known/openid-configuration
+      MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK_PRIMARY: minio
+      MINIO_IDENTITY_OPENID_CLIENT_SECRET_KEYCLOAK_PRIMARY: ********************************
+      MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK_PRIMARY: SSO_IDENTIFIER
+      MINIO_IDENTITY_OPENID_SCOPES_KEYCLOAK_PRIMARY: openid,profile
+    extra_hosts:
+      - synology-nas.local:host-gateway
+    networks:
+      - default
+      - shared
+    deploy:
+      resources:
+        limits:
+          cpus: mid
+          memory: 1g
+
+networks:
+  shared:
+    external: true
