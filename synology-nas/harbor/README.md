@@ -1,6 +1,29 @@
 # README
 
-How to setup Harbor on Synology NAS
+- [README](#readme)
+  - [Provide the Certificates to Docker](#provide-the-certificates-to-docker)
+  - [How to setup Harbor on Synology NAS](#how-to-setup-harbor-on-synology-nas)
+
+## Provide the Certificates to Docker
+
+1. Copy the server certificate and key files into the Docker certificates folder.
+
+    ``` bash
+    # You must create the appropriate folders first.
+    mkdir -p /etc/docker/certs.d/yourdomain.com:port
+
+    # Copy the server certificate.
+    cp yourdomain.com.cert /etc/docker/certs.d/yourdomain.com:port/
+    cp yourdomain.com.key /etc/docker/certs.d/yourdomain.com:port/
+    ```
+
+2. Restart Docker Engine.
+
+    ``` bash
+    systemctl restart docker
+    ```
+
+## How to setup Harbor on Synology NAS
 
 1. SSH into the Synology NAS and run the following commands to download the specific Harbor installer and setup the required directories.
 
