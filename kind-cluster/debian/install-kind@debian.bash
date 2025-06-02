@@ -117,6 +117,9 @@ apt update && apt upgrade && apt install -y --no-install-recommends \
   ca-certificates \
   bash-completion
 
+# create the bash_completion.d directory.
+mkdir -p /etc/bash_completion.d
+
 #
 # Install docker-ce if not exists.
 #
@@ -181,7 +184,6 @@ fi
 if ! command -v velero 2>&1 >/dev/null; then
   utils;info 'Install velero'
   curl -fsSL https://github.com/vmware-tanzu/velero/releases/download/$VELERO_VER/velero-$VELERO_VER-linux-$(dpkg --print-architecture).tar.gz | tar zxv -C /usr/local/bin/ --strip=1 --wildcards '*/velero'
-  mkdir -p /etc/bash_completion.d
   velero completion bash >/etc/bash_completion.d/velero
 fi
 
@@ -192,6 +194,5 @@ if ! command -v kind 2>&1 >/dev/null; then
   utils;info 'Install kind'
   curl -fsSL -o /usr/local/bin/kind https://kind.sigs.k8s.io/dl/$KIND_VER/kind-linux-$(dpkg --print-architecture)
   chmod +x /usr/local/bin/kind
-  mkdir -p /etc/bash_completion.d
   kind completion bash >/etc/bash_completion.d/kind
 fi
