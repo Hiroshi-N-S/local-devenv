@@ -59,6 +59,20 @@ utils() {
 }
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+# Check if a kind cluster already exists.
+
+if $(kind get clusters | grep -q $KIND_CLUSTER_NAME); then
+  utils;warn "\`$KIND_CLUSTER_NAME\` is already exist."
+
+  utils;msg "Do you want to delete the \`$KIND_CLUSTER_NAME\` cluster ? Enter [No/Yes]: "
+  read i
+  if [ "$i" == "Yes" ]; then
+    kind delete cluster --name $KIND_CLUSTER_NAME
+  fi
+  exit 0
+fi
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 # Generate a Cluster Certificate.
 
 K8S_DOMAIN=$K8S_DOMAIN NAS_DOMAIN=$NAS_DOMAIN CERT_FILE_NAME=$CERT_FILE_NAME bash $SCRIPT_DIR/../certs/generate-certs.bash
