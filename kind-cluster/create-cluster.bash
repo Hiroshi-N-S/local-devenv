@@ -1,13 +1,55 @@
 #!/bin/bash
 set -eux
 
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+# variables.
+
 K8S_DOMAIN=${K8S_DOMAIN:-'k8s-cluster'}
 CERT_FILE_NAME=${CERT_FILE_NAME:-'local-devenv'}
+
+LOG_LEVEL=${LOG_LEVEL:-'INFO'}
 
 WORK_DIR=$(pwd)
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
 cd ${SCRIPT_DIR}
+
+# --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+# utilities.
+
+utils() {
+  function logger() {
+    echo -e "[\033[1;$1\033[00m] $(date '+%Y-%m-%d %H:%M:%S.%3N'): ${@:2}"
+  }
+
+  function msg() {
+    echo -e "\033[32m > $@ \033[m"
+  }
+
+  function debug() {
+    if [[ "$LOG_LEVEL" =~ ^(DEBUG)$ ]]; then
+      logger "44m DEBUG " $@
+    fi
+  }
+
+  function info() {
+    if [[ "$LOG_LEVEL" =~ ^(DEBUG|INFO)$ ]]; then
+      logger "42m INFO  " $@
+    fi
+  }
+
+  function warn() {
+    if [[ "$LOG_LEVEL" =~ ^(DEBUG|INFO|WARN)$ ]]; then
+      logger "43m WARN  " $@
+    fi
+  }
+
+  function error() {
+    if [[ "$LOG_LEVEL" =~ ^(DEBUG|INFO|WARN|ERROR)$ ]]; then
+      logger "41m ERROR " $@
+    fi
+  }
+}
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 # Generate a Cluster Certificate.
