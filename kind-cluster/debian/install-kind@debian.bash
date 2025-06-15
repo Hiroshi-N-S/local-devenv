@@ -114,6 +114,7 @@ fi
 #
 apt update && apt upgrade && apt install -y --no-install-recommends \
   curl \
+  git \
   ca-certificates \
   bash-completion
 
