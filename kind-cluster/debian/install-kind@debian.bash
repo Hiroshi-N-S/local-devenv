@@ -98,7 +98,7 @@ if ! command -v sudo 2>&1 >/dev/null; then
   #
   # Install sudo.
   #
-  apt update && apt upgrade && apt install -y --no-install-recommends \
+  apt update && apt install -y --no-install-recommends \
     sudo
 
   #
@@ -112,7 +112,7 @@ fi
 #
 # Install dependencies if not exits.
 #
-apt update && apt upgrade && apt install -y --no-install-recommends \
+apt update && apt install -y --no-install-recommends \
   curl \
   git \
   ca-certificates \
